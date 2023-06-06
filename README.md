@@ -7,6 +7,6 @@ Currently, this is being utilized in two other projects:
 
 - An [mma-api](https://github.com/danetsao/mma-api).
 
-- A python package [PyFighter](https://github.com/danetsao/pyfighter) for mma athlete data.
+- A python package [PyFighter](https://github.com/danetsao/pyfighter) for mma athlete data. PRIVATE at the moment - in development.
 
-Feel free to use this data for your own projects. I will try to keep this updated as much as possible and feel free to contribute and suggest changes.
+Feel free to use this data for your own projects. I will try to keep this updated as much as possible and feel free to [contribute](https://github.com/danetsao/mma-scraping/blob/main/CONTRIBUTING.md) and suggest changes.
