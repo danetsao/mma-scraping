@@ -287,6 +287,7 @@ def get_all_athletes(print_data: bool = False):
                 'name': name,
                 'rank': rank,
                 'weightclass': ranking_name,
+                'name_postfix': name_postfix,
                 'data': current_athlete_data
             }
 
