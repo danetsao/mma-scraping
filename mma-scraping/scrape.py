@@ -6,7 +6,8 @@ from waiting import wait
 
 
 def get_athlete_data(name_postfix: str, print_data: bool = False) -> dict:
-    print(f"Getting data for {name_postfix}")
+    if print_data:
+        print(f"Getting data for {name_postfix}")
     url = 'https://www.ufc.com/athlete/' + name_postfix 
     response = requests.get(url)
 
