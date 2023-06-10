@@ -17,7 +17,7 @@ SQL = '''CREATE TABLE IF NOT EXISTS top (
 name VARCHAR(100),
 name_postfix VARCHAR(100),
 weight_class VARCHAR(100),
-pound_for_pound_rank INTEGER,
+rank INTEGER,
 first_round_finishes INTEGER,
 sig_strikes_landed FLOAT,
 sig_strikes_attempted FLOAT,
@@ -41,9 +41,11 @@ sig_strike_body INTEGER,
 sig_strike_leg INTEGER,
 wins_by_knockout INTEGER,
 wins_by_submission INTEGER,
-wins_by_decision INTEGER
+wins_by_decision INTEGER,
+fights JSONB
 )
 '''
+# Fights is a list of json
 
 class Database:
   def __init__(self, db, username, password, port):

@@ -1,13 +1,14 @@
-from database import *
+from storage import *
 from scrape import *
 
 
 def main():
+
     """
     All in one function that takes user input and then configures from there
     For more info, see https://github.com/danetsao/mma-scraping
-
     """
+    ERROR_MESSAGE = "Unexpected error. Please try again or contact the developer."
     print("Welcome to the MMA Scraper!")
     print("Please select from the following options:")
     print("1. Scrape data and print to console")

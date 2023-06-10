@@ -19,8 +19,6 @@ USERNAME = os.getenv ('DB_USERNAME')
 PASSWORD = os.getenv('DB_PASSWORD')
 DATABASE = os.getenv('DB_DATABASE')  
 
-# Thank to github copilot for helping me write these queries
-
 # Main function
 def main():
     
@@ -37,7 +35,8 @@ def main():
             athlete = validate(athlete)
             try:
                 wc = athlete['weightclass'].strip().replace("'", '')
-                cur_athlete_sql = f"INSERT INTO top (name, name_postfix, weight_class, pound_for_pound_rank, first_round_finishes, sig_strikes_landed, sig_strikes_attempted, striking_accuracy, take_downs_landed, take_downs_attempted, take_down_accuracy, sig_strikes_landed_per_min, sig_strikes_absorbed_per_min, take_down_avg_per_15_min, submission_avg_per_15_min, sig_strikes_defense, take_down_defense, kockdown_avg, average_fight_time, sig_strikes_standing, sig_strikes_clinch, sig_strikes_ground, sig_strike_head, sig_strike_body, sig_strike_leg, wins_by_knockout, wins_by_submission, wins_by_decision) VALUES ('{str(athlete['name']).strip()}', '{str(athlete['name_postfix'])}', '{wc}', {int(athlete['rank'].strip())}, {int(athlete['data']['first_round_finishes'])}, {float(athlete['data']['sig_strikes_landed'])}, {float(athlete['data']['sig_strikes_attempted'])}, {float(athlete['data']['striking_accuracy'])}, {int(athlete['data']['take_downs_landed'])}, {int(athlete['data']['take_downs_attempted'])}, {float(athlete['data']['take_down_accuracy'])}, {float(athlete['data']['sig_strikes_landed_per_min'])}, {float(athlete['data']['sig_strikes_absorbed_per_min'])}, {float(athlete['data']['take_down_avg_per_15_min'])}, {float(athlete['data']['submission_avg_per_15_min'])}, {int(athlete['data']['sig_strikes_defense'])}, {int(athlete['data']['take_down_defense'])}, {float(athlete['data']['kockdown_avg'])}, '{str(athlete['data']['average_fight_time'])}', {int(athlete['data']['sig_strikes_standing'])}, {int(athlete['data']['sig_strikes_clinch'])}, {int(athlete['data']['sig_strikes_ground'])}, {int(athlete['data']['sig_strike_head'])}, {int(athlete['data']['sig_strike_body'])}, {int(athlete['data']['sig_strike_leg'])}, {int(athlete['data']['wins_by_knockout'])}, {int(athlete['data']['wins_by_submission'])}, {int(athlete['data']['wins_by_decision'])})"
+                cur_athlete_sql = f"INSERT INTO top (name, name_postfix, weight_class, rank, first_round_finishes, sig_strikes_landed, sig_strikes_attempted, striking_accuracy, take_downs_landed, take_downs_attempted, take_down_accuracy, sig_strikes_landed_per_min, sig_strikes_absorbed_per_min, take_down_avg_per_15_min, submission_avg_per_15_min, sig_strikes_defense, take_down_defense, kockdown_avg, average_fight_time, sig_strikes_standing, sig_strikes_clinch, sig_strikes_ground, sig_strike_head, sig_strike_body, sig_strike_leg, wins_by_knockout, wins_by_submission, wins_by_decision) VALUES ('{str(athlete['name']).strip()}', '{str(athlete['name_postfix'])}', '{wc}', {int(athlete['rank'].strip())}, {int(athlete['data']['first_round_finishes'])}, {float(athlete['data']['sig_strikes_landed'])}, {float(athlete['data']['sig_strikes_attempted'])}, {float(athlete['data']['striking_accuracy'])}, {int(athlete['data']['take_downs_landed'])}, {int(athlete['data']['take_downs_attempted'])}, {float(athlete['data']['take_down_accuracy'])}, {float(athlete['data']['sig_strikes_landed_per_min'])}, {float(athlete['data']['sig_strikes_absorbed_per_min'])}, {float(athlete['data']['take_down_avg_per_15_min'])}, {float(athlete['data']['submission_avg_per_15_min'])}, {int(athlete['data']['sig_strikes_defense'])}, {int(athlete['data']['take_down_defense'])}, {float(athlete['data']['kockdown_avg'])}, '{str(athlete['data']['average_fight_time'])}', {int(athlete['data']['sig_strikes_standing'])}, {int(athlete['data']['sig_strikes_clinch'])}, {int(athlete['data']['sig_strikes_ground'])}, {int(athlete['data']['sig_strike_head'])}, {int(athlete['data']['sig_strike_body'])}, {int(athlete['data']['sig_strike_leg'])}, {int(athlete['data']['wins_by_knockout'])}, {int(athlete['data']['wins_by_submission'])}, {int(athlete['data']['wins_by_decision'])})"
+                print(athlete['data']['fights'])
                 db.execute_query(cur_athlete_sql)
                 # print(f'Inserted {athlete["name"]} into database')
 
@@ -101,6 +100,8 @@ def validate(athlete):
         athlete['data']['wins_by_submission'] = 0
     if athlete['data']['wins_by_decision'] == '':
         athlete['data']['wins_by_decision'] = 0
+    if athlete['data']['fights'] == '':
+        athlete['data']['fights'] = []
     
     return athlete
 
