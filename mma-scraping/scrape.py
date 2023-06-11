@@ -248,17 +248,58 @@ def get_all_athletes(print_data: bool = False):
 
     rankings_data_raw = soup.find_all("div", class_='view-grouping')
 
+    # Pop the first element because it is the pound for pound rankings
+    rankings_data_raw.pop(0)
+
     list_of_classes = []
 
     for rankings_table in rankings_data_raw:
+
         list_of_athletes = []
         current_table = rankings_table.find("tbody", class_='')
         ranking_name = rankings_table.find("h4", class_='')
         ranking_name = ranking_name.text
 
+        # Config champ data
+        cur_ranking_champion = rankings_table.find("h5")
+        cur_ranking_champion = cur_ranking_champion.find("a").text
+        cur_ranking_champion_postfix = rankings_table.find("h5").find("a")['href']
+        cur_ranking_champion_postfix = cur_ranking_champion_postfix[9:]
+        cur_ranking_champion_rank = 0
+
+        if print_data:
+            print(cur_ranking_champion)
+
+        # Config champ data
+            
+        try:
+            current_athlete_data = wait(lambda: get_athlete_data(cur_ranking_champion_postfix, print_data), timeout_seconds=10, waiting_for="something to be ready")
+        except Exception as e:
+            current_athlete_data = {}
+            print("Error: %s" % e)
+        
+        current_athlete_json = {
+            'name': cur_ranking_champion,
+            'name_postfix': cur_ranking_champion_postfix,
+            'rank': str(cur_ranking_champion_rank),
+            'weightclass': ranking_name,
+            'data': current_athlete_data
+        }
+
+        list_of_athletes.append(current_athlete_json)
+
+        if print_data:
+            print(f'Weightclass: {ranking_name}')
+            print(f'Name: {cur_ranking_champion}')
+            print(f'Rank: {cur_ranking_champion_rank}')
+            print(f'Rank Change: {0}')
+            print()
+        
+
         for current_athlete in current_table.find_all('tr'): # Loop through each table row
             cells = current_athlete.find_all('td') # Find all cells in the row
 
+            # Account for when rank is double digit
             rank = cells[0].text
             name = cells[1].text
             rank_change = cells[2].text
@@ -266,7 +307,11 @@ def get_all_athletes(print_data: bool = False):
             name_postfix = name_postfix[0:len(name_postfix)-1]
             current_athlete_data = {}
 
-            rank = rank.split()[0]
+            if len(rank) >= 2:
+                rank = rank.split()[0]
+                print(rank)
+            else:
+                rank = rank.split()[0]
 
             if print_data:
                 print(f'Weightclass: {ranking_name}')
@@ -283,7 +328,7 @@ def get_all_athletes(print_data: bool = False):
             # take first two words in name string
             if len(name.split()) >= 2:
                 name = name.split()[0] + ' ' + name.split()[1]
-            rank = rank[0]
+
             current_athlete_json = {
                 'name': name,
                 'rank': rank,
@@ -305,4 +350,4 @@ def get_all_athletes(print_data: bool = False):
 
 
 if __name__ == "__main__":
-    get_all_athletes()
+    get_all_athletes(True)

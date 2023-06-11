@@ -14,6 +14,7 @@ DATABASE = os.getenv('DB_DATABASE')
 PRESQL = '''DROP TABLE IF EXISTS top'''
 
 SQL = '''CREATE TABLE IF NOT EXISTS top (
+id SERIAL PRIMARY KEY,
 name VARCHAR(100),
 name_postfix VARCHAR(100),
 weight_class VARCHAR(100),
@@ -42,7 +43,8 @@ sig_strike_leg INTEGER,
 wins_by_knockout INTEGER,
 wins_by_submission INTEGER,
 wins_by_decision INTEGER,
-fights JSONB
+fights JSONB,
+p4p_rank INTEGER
 )
 '''
 # Fights is a list of json
