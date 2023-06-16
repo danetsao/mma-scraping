@@ -21,3 +21,5 @@ client/
 __pycache__/
 
 scraped_data_sample.txt
+
+mma-scraping/storage/data.json

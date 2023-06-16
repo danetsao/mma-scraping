@@ -3,6 +3,7 @@ import psycopg2 as pg2
 from dotenv import load_dotenv
 import os
 
+
 load_dotenv()
 # Database connection constants
 HOST = os.getenv('DB_HOST')
@@ -65,7 +66,6 @@ class Database:
     self.cur.execute(SQL)
     self.conn.commit()
 
-
   def execute_query(self, query):
     try:
         self.cur.execute(query)
@@ -82,3 +82,6 @@ class Database:
 db = Database(DATABASE, USERNAME, PASSWORD, PORT)
 
 db.connect()
+
+# Export db object
+# from storage.Database import db

@@ -3,10 +3,13 @@
 
 ### A simple web scraping project to get the latest information on MMA fights and fighters. This is the scraping data portion of some larger projects
 
-Currently, this is being utilized in two other projects:
+### Usage
 
-- An [mma-api](https://github.com/danetsao/mma-api).
+Simply run the `main.py` file or run any indiviudal files in the `storage` folder.
 
-- A python package [PyFighter](https://github.com/danetsao/pyfighter) for mma athlete data. PRIVATE at the moment - in development.
+## Getting Started
 
-Feel free to use this data for your own projects. I will try to keep this updated as much as possible and feel free to [contribute](https://github.com/danetsao/mma-scraping/blob/main/CONTRIBUTING.md) and suggest changes.
+### Prerequisites
+
+- Python 3.8.5
+- pip 20.0.2

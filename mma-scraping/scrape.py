@@ -249,7 +249,21 @@ def get_all_athletes(print_data: bool = False):
     rankings_data_raw = soup.find_all("div", class_='view-grouping')
 
     # Pop the first element because it is the pound for pound rankings
-    rankings_data_raw.pop(0)
+    p4p_rankings = rankings_data_raw.pop(0)
+    # Store p4p rankings in a hashmap with name as key and rank as value
+    #print(p4p_rankings)
+
+    p4p_rankings_dict = {}
+    for cur_p4p in p4p_rankings.find_all('tr'):
+        cells = cur_p4p.find_all('td')
+        rank = cells[0].text
+        name = cells[1].text
+        rank = rank.split()[0]
+        if len(name.split()) >= 2:
+            name = name.split()[0] + ' ' + name.split()[1]
+        p4p_rankings_dict[name] = rank
+
+    #print(p4p_rankings_dict)
 
     list_of_classes = []
 
@@ -277,12 +291,20 @@ def get_all_athletes(print_data: bool = False):
         except Exception as e:
             current_athlete_data = {}
             print("Error: %s" % e)
+
+        # Get p4p rank
+        if cur_ranking_champion in p4p_rankings_dict:
+            p4p_rank = p4p_rankings_dict[cur_ranking_champion]
+        else:
+            p4p_rank = -1
+
         
         current_athlete_json = {
             'name': cur_ranking_champion,
             'name_postfix': cur_ranking_champion_postfix,
             'rank': str(cur_ranking_champion_rank),
             'weightclass': ranking_name,
+            'p4p_rank': p4p_rank,
             'data': current_athlete_data
         }
 
@@ -293,7 +315,6 @@ def get_all_athletes(print_data: bool = False):
             print(f'Name: {cur_ranking_champion}')
             print(f'Rank: {cur_ranking_champion_rank}')
             print(f'Rank Change: {0}')
-            print()
         
 
         for current_athlete in current_table.find_all('tr'): # Loop through each table row
@@ -329,11 +350,18 @@ def get_all_athletes(print_data: bool = False):
             if len(name.split()) >= 2:
                 name = name.split()[0] + ' ' + name.split()[1]
 
+            # Get p4p rank
+            if name in p4p_rankings_dict:
+                p4p_rank = p4p_rankings_dict[name]
+            else:
+                p4p_rank = -1
+
             current_athlete_json = {
                 'name': name,
                 'rank': rank,
                 'weightclass': ranking_name,
                 'name_postfix': name_postfix,
+                'p4p_rank': p4p_rank,
                 'data': current_athlete_data
             }
 
