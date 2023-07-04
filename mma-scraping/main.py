@@ -18,10 +18,12 @@ from storage.validate import validate
 
 
 def main():
+    
     """
     All in one function that takes user input and then configures from there
     For more info, see https://github.com/danetsao/mma-scraping
     """
+
     ERROR_MESSAGE = "Unexpected error. Please try again or contact the developer."
     print("Welcome to the MMA Scraper!")
     print("Please select from the following options:")
@@ -40,7 +42,7 @@ def main():
         else:
             show_data = False
 
-        print("Scraping data and printing to console...")
+        print("Scraping data...")
         athlete_data = get_all_athletes(show_data)
 
         print(athlete_data)
@@ -53,7 +55,7 @@ def main():
         else:
             show_data = False
 
-        print("Scraping data and saving to json file...")
+        print("Scraping data")
 
         athlete_data = get_all_athletes(show_data)
 
@@ -67,7 +69,8 @@ def main():
             show_data = True
         else:
             show_data = False
-        print("Scraping data and saving to database...")
+
+        print("Scraping data")
 
         athlete_data = get_all_athletes(show_data)
 
@@ -83,7 +86,7 @@ def main():
         else:
             show_data = False
 
-        print("Scraping data and saving to CSV file...")
+        print("Scraping data")
 
         athlete_data = get_all_athletes(show_data)
 

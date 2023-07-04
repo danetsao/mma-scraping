@@ -234,7 +234,8 @@ def get_fight_data(name_postfix: str, print_data: bool):
         
     return list_of_fights
 
-def get_all_athletes(print_data: bool = False):
+def get_all_athletes(show_name: bool = False):
+    print_data = False
     """
     Get the UFC athlete rankings from the UFC website.
     Currently prints top 15 athletes in each weight class, their ranking and their rank change.
@@ -281,9 +282,6 @@ def get_all_athletes(print_data: bool = False):
         cur_ranking_champion_postfix = cur_ranking_champion_postfix[9:]
         cur_ranking_champion_rank = 0
 
-        if print_data:
-            print(cur_ranking_champion)
-
         # Config champ data
             
         try:
@@ -316,6 +314,9 @@ def get_all_athletes(print_data: bool = False):
             print(f'Rank: {cur_ranking_champion_rank}')
             print(f'Rank Change: {0}')
         
+        if show_name:
+            print(f'{ranking_name}')
+            print(f"{cur_ranking_champion_rank}: {cur_ranking_champion}")
 
         for current_athlete in current_table.find_all('tr'): # Loop through each table row
             cells = current_athlete.find_all('td') # Find all cells in the row
@@ -330,7 +331,6 @@ def get_all_athletes(print_data: bool = False):
 
             if len(rank) >= 2:
                 rank = rank.split()[0]
-                print(rank)
             else:
                 rank = rank.split()[0]
 
@@ -339,7 +339,8 @@ def get_all_athletes(print_data: bool = False):
                 print(f'Name: {name}')
                 print(f'Rank: {rank}')
                 print(f'Rank Change: {rank_change}')
-
+            if show_name:
+                print(f"{rank}: {name}")
             try:
                 current_athlete_data = wait(lambda: get_athlete_data(name_postfix, print_data), timeout_seconds=10, waiting_for="something to be ready")
             except Exception as e:
